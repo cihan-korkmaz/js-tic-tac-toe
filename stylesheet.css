@@ -2,3 +2,26 @@
     height: 200px;
     width: 200px;
 }
+
+#div1 {
+    display: flex;
+}
+#div2 {
+    display: flex;
+}
+#div3 {
+    display: flex;
+}
+
+.p1 {
+    display: flex;
+    width: 200px;
+    height: 200px;
+    margin: 0;
+    align-items:center;
+    justify-content:center;
+    font-size: 200px;
+    font-family: 'Arial';
+    box-sizing: border-box;
+    border: 4px solid blue;
+}
