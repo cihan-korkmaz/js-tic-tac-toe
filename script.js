@@ -49,11 +49,10 @@ const Board = (function Create_board() {
 })();
 
 const Game = (function Play() {
-    let turn_cycle = 0;
+    let turn_cycle = "player_1";
     let game_over = false;
 
     function victory_test() {
-        console.log("victory test game over: " + Game.game_over);
         let board = Board.game_board;
         let row_1 = board[0][0] + board[0][1] + board[0][2];
         let row_2 = board[1][0] + board[1][1] + board[1][2];
@@ -101,25 +100,26 @@ const Game = (function Play() {
         if (Game.game_over && player_1.mark === last_played_mark) {
             player_1.wins += 1;
             console.log("p1 wins " + player_1.wins)
+            Game.turn_cycle = "player_1";
             // Board.reset();
             // game_over = false;
         } else if (Game.game_over && player_2.mark === last_played_mark) {
             player_2.wins += 1;
             console.log("p2 wins " + player_2.wins);
+            Game.turn_cycle = "player_2";
             // Board.reset();
             // game_over = false;
         };
     };
     function set_mark(id) {
-        console.log("set mark game over: " + Game.game_over);
         if (!Game.game_over) {
             let current_player;
-            if (turn_cycle === 0) {
+            if (Game.turn_cycle === "player_1") {
                 current_player = player_1;
-                turn_cycle = 1;
-            } else {
+                Game.turn_cycle = "player_2";
+            } else if (Game.turn_cycle === "player_2") {
                 current_player = player_2;
-                turn_cycle = 0;
+                Game.turn_cycle = "player_1";
             };
             Board.set_mark_page(id, current_player.mark);
             Board.set_mark_game_board(id, current_player.mark);
@@ -127,7 +127,7 @@ const Game = (function Play() {
         };
         
     };
-    return {set_mark, victory_test, game_over}
+    return {set_mark, victory_test, game_over, turn_cycle}
 })();
 
 function Player(mark, name) {
@@ -137,20 +137,3 @@ function Player(mark, name) {
 
 let player_1 = Player("X", "player1");
 let player_2 = Player("O", "player2");
-
-const Test = (function test_f() {
-    let x = true;
-    function alpha() {
-        console.log("alpha: " + Test.x);
-
-    };
-    function beta() {
-        console.log("beta: " + Test.x);
-        alpha();
-
-    };
-    return {alpha, beta, x};
-})();
-Test.alpha();
-Test.beta();
-
