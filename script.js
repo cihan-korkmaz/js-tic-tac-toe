@@ -45,7 +45,17 @@ const Board = (function Create_board() {
         reset_game_board();
         Game.game_over = false;
     }
-    return {game_board, set_mark_page, set_mark_game_board, reset}
+    function set_score(player) {
+        const score_para = document.createElement("p");
+        score_para.classList.add("score");
+        score_para.setAttribute("id",player.mark);
+        const wins = document.createTextNode(player.wins);
+        score_para.appendChild(wins);
+        const old_score = document.getElementById(player.mark);
+        old_score.parentNode.replaceChild(score_para, old_score);
+        
+    }
+    return {game_board, set_mark_page, set_mark_game_board, reset, set_score}
 })();
 
 const Game = (function Play() {
@@ -99,16 +109,14 @@ const Game = (function Play() {
         };
         if (Game.game_over && player_1.mark === last_played_mark) {
             player_1.wins += 1;
+            Board.set_score(player_1);
             console.log("p1 wins " + player_1.wins)
             Game.turn_cycle = "player_1";
-            // Board.reset();
-            // game_over = false;
         } else if (Game.game_over && player_2.mark === last_played_mark) {
             player_2.wins += 1;
+            Board.set_score(player_2);
             console.log("p2 wins " + player_2.wins);
             Game.turn_cycle = "player_2";
-            // Board.reset();
-            // game_over = false;
         };
     };
     function set_mark(id) {
