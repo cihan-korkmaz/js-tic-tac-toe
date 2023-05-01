@@ -38,7 +38,6 @@ const Board = (function Create_board() {
                 game_board[i][j] = "";
             }
         }
-        
     }
     function reset() {
         reset_page();
@@ -46,16 +45,21 @@ const Board = (function Create_board() {
         Game.game_over = false;
     }
     function set_score(player) {
-        const score_para = document.createElement("p");
-        score_para.classList.add("score");
-        score_para.setAttribute("id",player.mark);
-        const wins = document.createTextNode(player.wins);
-        score_para.appendChild(wins);
-        const old_score = document.getElementById(player.mark);
-        old_score.parentNode.replaceChild(score_para, old_score);
-        
+        document.getElementById(player.mark).innerText = player.wins;
     }
-    return {game_board, set_mark_page, set_mark_game_board, reset, set_score}
+    function set_name(player) {
+        let new_name = prompt("Enter your name!");
+        player.name = new_name;
+        document.getElementById(`name_${player.mark}`).innerText = player.name;
+    }
+    return {
+        game_board, 
+        set_mark_page, 
+        set_mark_game_board, 
+        reset, 
+        set_score, 
+        set_name
+    }
 })();
 
 const Game = (function Play() {
@@ -135,13 +139,22 @@ const Game = (function Play() {
         };
         
     };
-    return {set_mark, victory_test, game_over, turn_cycle}
+    return {
+        set_mark, 
+        victory_test, 
+        game_over, 
+        turn_cycle
+    }
 })();
 
 function Player(mark, name) {
     let wins = 0;
-    return {mark, name, wins}
+    return {
+        mark, 
+        name, 
+        wins
+    }
 }
 
-let player_1 = Player("X", "player1");
-let player_2 = Player("O", "player2");
+let player_1 = Player("X", "Player 1");
+let player_2 = Player("O", "Player 2");
