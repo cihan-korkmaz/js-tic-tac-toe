@@ -45,12 +45,19 @@ const Board = (function Create_board() {
         Game.game_over = false;
     }
     function set_score(player) {
-        document.getElementById(player.mark).innerText = player.wins;
+        document.getElementById(player.mark).innerText = `Score: ${player.wins}`;
     }
     function set_name(player) {
         let new_name = prompt("Enter your name!");
         player.name = new_name;
         document.getElementById(`name_${player.mark}`).innerText = player.name;
+    }
+    function new_game() {
+        player_1.wins = 0;
+        player_2.wins = 0;
+        set_score(player_1);
+        set_score(player_2);
+        reset();
     }
     return {
         game_board, 
@@ -58,7 +65,8 @@ const Board = (function Create_board() {
         set_mark_game_board, 
         reset, 
         set_score, 
-        set_name
+        set_name,
+        new_game
     }
 })();
 

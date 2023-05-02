@@ -10,13 +10,15 @@
 <body>
     <div id="neutral">
         <p>Neutral</p>
-        <input id="" class="" onClick="Board.reset()" type="button" value="Next Turn">
+        <input onClick="Board.reset()" type="button" value="Next Round">
+        <input onClick="Board.new_game()" type="button" value="New Game">
     </div>
     <div id="game_body">
         <div class="player" id="player 1">
             <input onClick="Board.set_name(player_1)" type="button" value="Change Name">
             <p class="name" id="name_X">Player 1</p>
-            <p class="score" id="X">0</p>
+            <p class="mark">X</p>
+            <p class="score" id="X">Score: 0</p>
         </div>
         <div id="board">
             <div id="row_1" class="buttons">
@@ -38,7 +40,8 @@
         <div class="player" id="player 2">
             <input onClick="Board.set_name(player_2)" type="button" value="Change Name">
             <p class="name" id="name_O">Player 2</p>
-            <p class="score" id="O">0</p>
+            <p class="mark">O</p>
+            <p class="score" id="O">Score: 0</p>
         </div>
     </div>
 
