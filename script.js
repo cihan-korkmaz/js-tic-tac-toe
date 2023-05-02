@@ -1,8 +1,8 @@
 const Board = (function Create_board() {
     let game_board = [
-        [[], [], []], 
-        [[], [], []], 
-        [[], [], []]
+        ["", "", ""], 
+        ["", "", ""], 
+        ["", "", ""]
     ]
     function set_mark_page(id, mark) {
         const para = document.createElement("p");
@@ -58,23 +58,21 @@ const Board = (function Create_board() {
         player_2.wins = 0;
         set_score(player_1);
         set_score(player_2);
+        Game.turn_cycle = "player_1";
         reset();
     }
     function display() {
-        let x_win = "x win";
-        let o_win = "o win";
-        let x_turn = "x go";
-        let o_turn = "o go";
-        let current_text;
-        
+        let current_text;        
         if (Game.game_over && Game.turn_cycle === "player_1") {
-            current_text = x_win;
+            current_text = "x win";
         } else if (Game.game_over && Game.turn_cycle === "player_2") {
-            current_text = o_win;
+            current_text = "o win";
+        } else if (Game.empty_space === 0) {
+            current_text = "tie";
         } else if (Game.turn_cycle === "player_1") {
-            current_text = x_turn;
+            current_text = "x go";
         } else if (Game.turn_cycle === "player_2") {
-            current_text = o_turn;
+            current_text = "o go";
         };
         document.getElementById("display").innerText = current_text;
     }
@@ -93,6 +91,8 @@ const Board = (function Create_board() {
 const Game = (function Play() {
     let turn_cycle = "player_1";
     let game_over = false;
+    let last_played_mark;
+    let empty_space;
 
     function victory_test() {
         let board = Board.game_board;
@@ -104,50 +104,42 @@ const Game = (function Play() {
         let column_3 = board[0][2] + board[1][2] + board[2][2];
         let diagonal_1 = board[0][0] + board[1][1] + board[2][2];
         let diagonal_2 = board[0][2] + board[1][1] + board[2][0];
+
+        Game.empty_space = 0;
+        for (let i = 0; i < 3; i++) {
+            Game.empty_space += board[i].filter(x => x==="").length;
+        }
         
-        let last_played_mark;
+        
         if (row_1 === "XXX" || row_1 === "OOO") {
-            last_played_mark = row_1[0]
-            console.log(`${last_played_mark} wins!`);
             Game.game_over = true;
         } else if (row_2 === "XXX" || row_2 === "OOO") {
-            last_played_mark = row_2[0]
-            console.log(`${last_played_mark} wins!`);
             Game.game_over = true;
         } else if (row_3 === "XXX" || row_3 === "OOO") {
-            last_played_mark = row_3[0]
-            console.log(`${last_played_mark} wins!`);
             Game.game_over = true;
         } else if (column_1 === "XXX" || column_1 === "OOO") {
-            last_played_mark = column_1[0]
-            console.log(`${last_played_mark} wins!`);
             Game.game_over = true;
         } else if (column_2 === "XXX" || column_2 === "OOO") {
-            last_played_mark = column_2[0]
-            console.log(`${last_played_mark} wins!`);
             Game.game_over = true;
         } else if (column_3 === "XXX" || column_3 === "OOO") {
-            last_played_mark = column_3[0]
-            console.log(`${last_played_mark} wins!`);
             Game.game_over = true;
         } else if (diagonal_1 === "XXX" || diagonal_1 === "OOO") {
-            last_played_mark = diagonal_1[0]
-            console.log(`${last_played_mark} wins!`);
             Game.game_over = true;
         } else if (diagonal_2 === "XXX" || diagonal_2 === "OOO") {
-            last_played_mark = diagonal_2[0]
-            console.log(`${last_played_mark} wins!`);
             Game.game_over = true;
         };
-        if (Game.game_over && player_1.mark === last_played_mark) {
+
+        if (Game.empty_space === 0 && !Game.game_over) {
+            console.log("Tie");
+        }
+        
+        if (Game.game_over && player_1.mark === Game.last_played_mark) {
             player_1.wins += 1;
             Board.set_score(player_1);
-            console.log("p1 wins " + player_1.wins)
             Game.turn_cycle = "player_1";
-        } else if (Game.game_over && player_2.mark === last_played_mark) {
+        } else if (Game.game_over && player_2.mark === Game.last_played_mark) {
             player_2.wins += 1;
             Board.set_score(player_2);
-            console.log("p2 wins " + player_2.wins);
             Game.turn_cycle = "player_2";
         };
         Board.display();
@@ -164,6 +156,7 @@ const Game = (function Play() {
             };
             Board.set_mark_page(id, current_player.mark);
             Board.set_mark_game_board(id, current_player.mark);
+            Game.last_played_mark = current_player.mark;
             victory_test();
         };
         
@@ -172,7 +165,8 @@ const Game = (function Play() {
         set_mark, 
         victory_test, 
         game_over, 
-        turn_cycle
+        turn_cycle,
+        empty_space
     }
 })();
 
