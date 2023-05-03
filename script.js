@@ -69,6 +69,7 @@ const Board = (function Create_board() {
             current_text = "o win";
         } else if (Game.empty_space === 0) {
             current_text = "tie";
+            Game.empty_space = 9;
         } else if (Game.turn_cycle === "player_1") {
             current_text = "x go";
         } else if (Game.turn_cycle === "player_2") {
@@ -128,10 +129,6 @@ const Game = (function Play() {
         } else if (diagonal_2 === "XXX" || diagonal_2 === "OOO") {
             Game.game_over = true;
         };
-
-        if (Game.empty_space === 0 && !Game.game_over) {
-            console.log("Tie");
-        }
         
         if (Game.game_over && player_1.mark === Game.last_played_mark) {
             player_1.wins += 1;
