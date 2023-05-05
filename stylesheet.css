@@ -1,12 +1,16 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
 .empty {
     height: 200px;
     width: 200px;
+    border: 4px solid black;
+    background-color: white;
 }
-
 .buttons {
     display: flex;
 }
-
 .p1 {
     display: flex;
     width: 200px;
@@ -19,20 +23,117 @@
     box-sizing: border-box;
     border: 4px solid black;
 }
-
 #game_body {
     display: flex;
     justify-content: center;
 }
-
 #game_head {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 200px;
-    height: 200px;
-    border: 10px solid black;
-    padding: 20px;
-    margin: 100px;
+}
+#title {
+    font-size: 70px;
+    margin: 0px;
+}
+.game_buttons {
+    margin: 10px;
+    height: 50px;
+    width: 100px;
+}
+#display {
+    margin: 10px;
+    margin-bottom: 20px;
+    font-size: 50px;
+}
+.player {
+    display: flex;
+    align-items: top;
+}
+.name {
+    display: flex;
+    justify-content: center;
+    font-size: 40px;
+    width: 300px;
+    word-break: break-word;
+    text-align: center;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+.mark {
+    font-size: 60px;
+    margin-top: 0px;
+}
+.score {
+    display: flex;
+    font-size: 40px;
+    text-align: center;
+
+}
+#name_X, #mark_x, .x_color {
+    color: #B980F0;
+}
+#name_O, #mark_o, .o_color {
+    color: #FE9898;
+}
+#m00 {
+    border-top: transparent;
+    border-left: transparent;
+}
+#m01 {
+    border-top: transparent;
+}
+#m02 {
+    border-top: transparent;
+    border-right: transparent;
+}
+#m10 {
+    border-left: transparent;
+}
+#m12 {
+    border-right: transparent;
+}
+#m20 {
+    border-bottom: transparent;
+    border-left: transparent;
+}
+#m21 {
+    border-bottom: transparent;
+}
+#m22 {
+    border-bottom: transparent;
+    border-right: transparent;
+}
+#b00 {
+    border-top: transparent;
+    border-left: transparent;
+}
+#b01 {
+    border-top: transparent;
+}
+#b02 {
+    border-top: transparent;
+    border-right: transparent;
+}
+#b10 {
+    border-left: transparent;
+}
+#b12 {
+    border-right: transparent;
+}
+#b20 {
+    border-bottom: transparent;
+    border-left: transparent;
+}
+#b21 {
+    border-bottom: transparent;
+}
+#b22 {
+    border-bottom: transparent;
+    border-right: transparent;
 }

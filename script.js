@@ -6,6 +6,11 @@ const Board = (function Create_board() {
     ]
     function set_mark_page(id, mark) {
         const para = document.createElement("p");
+        if (mark === "X") {
+            para.classList.add("x_color");
+        } else if (mark === "O") {
+            para.classList.add("o_color");
+        }
         para.classList.add("p1");
         para.setAttribute("id",`m${id[1]}${id[2]}`);
         const marked = document.createTextNode(mark);
@@ -46,12 +51,13 @@ const Board = (function Create_board() {
         display();
     }
     function set_score(player) {
-        document.getElementById(player.mark).innerText = `Score: ${player.wins}`;
+        document.getElementById(player.mark).innerText = `Score:\n${player.wins}`;
     }
     function set_name(player) {
         let new_name = prompt("Enter your name!");
         player.name = new_name;
         document.getElementById(`name_${player.mark}`).innerText = player.name;
+        display();
     }
     function new_game() {
         player_1.wins = 0;
@@ -64,16 +70,16 @@ const Board = (function Create_board() {
     function display() {
         let current_text;        
         if (Game.game_over && Game.turn_cycle === "player_1") {
-            current_text = "x win";
+            current_text = `${player_1.name} Wins!`;
         } else if (Game.game_over && Game.turn_cycle === "player_2") {
-            current_text = "o win";
+            current_text = `${player_2.name} Wins!`;
         } else if (Game.empty_space === 0) {
-            current_text = "tie";
+            current_text = "Tie!";
             Game.empty_space = 9;
         } else if (Game.turn_cycle === "player_1") {
-            current_text = "x go";
+            current_text = `${player_1.name}'s Turn!`;
         } else if (Game.turn_cycle === "player_2") {
-            current_text = "o go";
+            current_text = `${player_2.name}'s Turn!`;
         };
         document.getElementById("display").innerText = current_text;
     }
@@ -88,13 +94,11 @@ const Board = (function Create_board() {
         display
     }
 })();
-
 const Game = (function Play() {
     let turn_cycle = "player_1";
     let game_over = false;
     let last_played_mark;
     let empty_space;
-
     function victory_test() {
         let board = Board.game_board;
         let row_1 = board[0][0] + board[0][1] + board[0][2];
@@ -105,13 +109,10 @@ const Game = (function Play() {
         let column_3 = board[0][2] + board[1][2] + board[2][2];
         let diagonal_1 = board[0][0] + board[1][1] + board[2][2];
         let diagonal_2 = board[0][2] + board[1][1] + board[2][0];
-
         Game.empty_space = 0;
         for (let i = 0; i < 3; i++) {
             Game.empty_space += board[i].filter(x => x==="").length;
         }
-        
-        
         if (row_1 === "XXX" || row_1 === "OOO") {
             Game.game_over = true;
         } else if (row_2 === "XXX" || row_2 === "OOO") {
@@ -129,7 +130,6 @@ const Game = (function Play() {
         } else if (diagonal_2 === "XXX" || diagonal_2 === "OOO") {
             Game.game_over = true;
         };
-        
         if (Game.game_over && player_1.mark === Game.last_played_mark) {
             player_1.wins += 1;
             Board.set_score(player_1);
@@ -155,8 +155,7 @@ const Game = (function Play() {
             Board.set_mark_game_board(id, current_player.mark);
             Game.last_played_mark = current_player.mark;
             victory_test();
-        };
-        
+        }; 
     };
     return {
         set_mark, 
@@ -166,7 +165,6 @@ const Game = (function Play() {
         empty_space
     }
 })();
-
 function Player(mark, name) {
     let wins = 0;
     return {
@@ -175,7 +173,8 @@ function Player(mark, name) {
         wins
     }
 }
-
 let player_1 = Player("X", "Player 1");
 let player_2 = Player("O", "Player 2");
+Board.set_score(player_1);
+Board.set_score(player_2);
 Board.display();
